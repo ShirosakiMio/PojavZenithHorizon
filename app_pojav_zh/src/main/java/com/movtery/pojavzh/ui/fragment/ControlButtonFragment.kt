@@ -17,9 +17,9 @@ import com.movtery.pojavzh.ui.dialog.FilesDialog
 import com.movtery.pojavzh.ui.dialog.FilesDialog.FilesButton
 import com.movtery.pojavzh.ui.dialog.TipDialog
 import com.movtery.pojavzh.ui.subassembly.customcontrols.ControlInfoData
+import com.movtery.pojavzh.ui.subassembly.customcontrols.ControlSelectedListener
 import com.movtery.pojavzh.ui.subassembly.customcontrols.ControlsListViewCreator
 import com.movtery.pojavzh.ui.subassembly.customcontrols.EditControlData.Companion.createNewControlFile
-import com.movtery.pojavzh.ui.subassembly.filelist.FileSelectedListener
 import com.movtery.pojavzh.ui.subassembly.view.SearchViewWrapper
 import com.movtery.pojavzh.utils.NewbieGuideUtils
 import com.movtery.pojavzh.utils.PathAndUrlManager
@@ -80,22 +80,22 @@ class ControlButtonFragment : FragmentWithAnim(R.layout.fragment_control_manager
         bindViews(view)
         parseBundle()
 
-        controlsListViewCreator?.setFileSelectedListener(object : FileSelectedListener() {
-            override fun onFileSelected(file: File?, path: String?) {
+        controlsListViewCreator?.setSelectedListener(object : ControlSelectedListener() {
+            override fun onItemSelected(file: File) {
                 if (mSelectControl) {
-                    ExtraCore.setValue(ExtraConstants.FILE_SELECTOR, removeLockPath(path))
+                    ExtraCore.setValue(ExtraConstants.FILE_SELECTOR, removeLockPath(file.absolutePath))
                     Tools.removeCurrentFragment(requireActivity())
                 } else {
-                    file?.let { if (it.isFile) showDialog(it) }
+                    if (file.isFile) showDialog(file)
                 }
             }
 
-            override fun onItemLongClick(file: File?, path: String?) {
+            override fun onItemLongClick(file: File) {
                 TipDialog.Builder(requireContext())
                     .setTitle(R.string.default_control)
                     .setMessage(R.string.zh_controls_set_default_message)
                     .setConfirmClickListener {
-                        val absolutePath = file!!.absolutePath
+                        val absolutePath = file.absolutePath
                         LauncherPreferences.DEFAULT_PREF.edit()
                             .putString("defaultCtrl", absolutePath).apply()
                         LauncherPreferences.PREF_DEFAULTCTRL_PATH = absolutePath

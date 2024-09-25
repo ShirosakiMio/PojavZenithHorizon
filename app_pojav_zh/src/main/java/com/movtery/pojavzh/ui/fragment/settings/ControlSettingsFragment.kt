@@ -8,13 +8,14 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import com.movtery.pojavzh.ui.fragment.CustomMouseFragment
+import com.movtery.pojavzh.ui.fragment.FragmentWithAnim
 import com.movtery.pojavzh.utils.ZHTools
 import fr.spse.gamepad_remapper.Remapper
 import net.kdt.pojavlaunch.R
 import net.kdt.pojavlaunch.fragments.GamepadMapperFragment
 import net.kdt.pojavlaunch.prefs.LauncherPreferences
 
-class ControlSettingsFragment : AbstractSettingsFragment(R.layout.settings_fragment_control) {
+class ControlSettingsFragment(val parent: FragmentWithAnim) : AbstractSettingsFragment(R.layout.settings_fragment_control) {
     private var mainView: View? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -131,7 +132,7 @@ class ControlSettingsFragment : AbstractSettingsFragment(R.layout.settings_fragm
         )
         customMouse.mainView.setOnClickListener {
             ZHTools.swapFragmentWithAnim(
-                this,
+                parent,
                 CustomMouseFragment::class.java,
                 CustomMouseFragment.TAG,
                 null
@@ -215,7 +216,7 @@ class ControlSettingsFragment : AbstractSettingsFragment(R.layout.settings_fragm
         )
         changeControllerBindings.mainView.setOnClickListener {
             ZHTools.swapFragmentWithAnim(
-                this,
+                parent,
                 GamepadMapperFragment::class.java,
                 GamepadMapperFragment.TAG,
                 null
@@ -263,28 +264,16 @@ class ControlSettingsFragment : AbstractSettingsFragment(R.layout.settings_fragm
 
     private fun computeVisibility() {
         mainView?.apply {
-            findViewById<View>(R.id.timeLongPressTrigger_layout).visibility =
-                if (!LauncherPreferences.PREF_DISABLE_GESTURES) View.VISIBLE else View.GONE
+            setViewVisibility(findViewById(R.id.timeLongPressTrigger_layout), !LauncherPreferences.PREF_DISABLE_GESTURES)
+            setViewVisibility(findViewById(R.id.gyroSensitivity_layout), LauncherPreferences.PREF_ENABLE_GYRO)
+            setViewVisibility(findViewById(R.id.gyroSampleRate_layout), LauncherPreferences.PREF_ENABLE_GYRO)
+            setViewVisibility(findViewById(R.id.gyroInvertX_layout), LauncherPreferences.PREF_ENABLE_GYRO)
+            setViewVisibility(findViewById(R.id.gyroInvertY_layout), LauncherPreferences.PREF_ENABLE_GYRO)
+            setViewVisibility(findViewById(R.id.gyroSmoothing_layout), LauncherPreferences.PREF_ENABLE_GYRO)
         }
-        mainView?.apply {
-            findViewById<View>(R.id.gyroSensitivity_layout).visibility =
-                if (LauncherPreferences.PREF_ENABLE_GYRO) View.VISIBLE else View.GONE
-        }
-        mainView?.apply {
-            findViewById<View>(R.id.gyroSampleRate_layout).visibility =
-                if (LauncherPreferences.PREF_ENABLE_GYRO) View.VISIBLE else View.GONE
-        }
-        mainView?.apply {
-            findViewById<View>(R.id.gyroInvertX_layout).visibility =
-                if (LauncherPreferences.PREF_ENABLE_GYRO) View.VISIBLE else View.GONE
-        }
-        mainView?.apply {
-            findViewById<View>(R.id.gyroInvertY_layout).visibility =
-                if (LauncherPreferences.PREF_ENABLE_GYRO) View.VISIBLE else View.GONE
-        }
-        mainView?.apply {
-            findViewById<View>(R.id.gyroSmoothing_layout).visibility =
-                if (LauncherPreferences.PREF_ENABLE_GYRO) View.VISIBLE else View.GONE
-        }
+    }
+
+    private fun setViewVisibility(view: View, visible: Boolean) {
+        view.visibility = if (visible) View.VISIBLE else View.GONE
     }
 }

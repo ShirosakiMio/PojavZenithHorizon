@@ -58,8 +58,6 @@ public class ProgressLayout extends ConstraintLayout implements View.OnClickList
     private TextView mTaskNumberDisplayer;
     private ImageView mFlipArrow;
 
-
-
     public void observe(String progressKey){
         mMap.add(new LayoutProgressListener(progressKey));
     }
@@ -80,7 +78,6 @@ public class ProgressLayout extends ConstraintLayout implements View.OnClickList
         mLinearLayout = findViewById(R.id.progress_linear_layout);
         mTaskNumberDisplayer = findViewById(R.id.progress_textview);
         mFlipArrow = findViewById(R.id.progress_flip_arrow);
-        setBackgroundColor(getResources().getColor(R.color.menu_overlay, getContext().getTheme()));
         setOnClickListener(this);
     }
 
@@ -138,6 +135,7 @@ public class ProgressLayout extends ConstraintLayout implements View.OnClickList
         public void onProgressStarted() {
             post(()-> {
                 Logging.i("ProgressLayout", "onProgressStarted");
+                textView.setProgress(0);
                 mLinearLayout.addView(textView, params);
             });
         }

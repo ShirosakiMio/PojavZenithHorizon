@@ -6,13 +6,14 @@ import android.view.View
 import com.movtery.pojavzh.extra.ZHExtraConstants
 import com.movtery.pojavzh.feature.UpdateLauncher
 import com.movtery.pojavzh.ui.fragment.CustomBackgroundFragment
+import com.movtery.pojavzh.ui.fragment.FragmentWithAnim
 import com.movtery.pojavzh.utils.CleanUpCache.Companion.start
 import com.movtery.pojavzh.utils.ZHTools
 import net.kdt.pojavlaunch.R
 import net.kdt.pojavlaunch.extra.ExtraCore
 import net.kdt.pojavlaunch.prefs.LauncherPreferences
 
-class LauncherSettingsFragment : AbstractSettingsFragment(R.layout.settings_fragment_launcher) {
+class LauncherSettingsFragment(val parent: FragmentWithAnim): AbstractSettingsFragment(R.layout.settings_fragment_launcher) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val downloadCategory = bindCategory(view.findViewById(R.id.download_category))
         val languageCategory = bindCategory(view.findViewById(R.id.language_category))
@@ -97,7 +98,7 @@ class LauncherSettingsFragment : AbstractSettingsFragment(R.layout.settings_frag
                 null,
                 R.id.setGameLanguage_value
             ),
-            ZHTools.getSystemLanguage(),
+            "system",
             R.array.all_game_language,
             R.array.all_game_language_value
         )
@@ -124,7 +125,7 @@ class LauncherSettingsFragment : AbstractSettingsFragment(R.layout.settings_frag
         )
         customBackground.mainView.setOnClickListener {
             ZHTools.swapFragmentWithAnim(
-                this,
+                parent,
                 CustomBackgroundFragment::class.java,
                 CustomBackgroundFragment.TAG,
             null

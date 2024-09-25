@@ -35,16 +35,16 @@ import com.movtery.pojavzh.feature.UpdateLauncher;
 import com.movtery.pojavzh.feature.accounts.AccountUpdateListener;
 import com.movtery.pojavzh.feature.accounts.AccountsManager;
 import com.movtery.pojavzh.feature.accounts.LocalAccountUtils;
+import com.movtery.pojavzh.feature.background.BackgroundManager;
+import com.movtery.pojavzh.feature.background.BackgroundType;
 import com.movtery.pojavzh.feature.log.Logging;
 import com.movtery.pojavzh.feature.mod.modpack.install.InstallExtra;
 import com.movtery.pojavzh.feature.mod.modpack.install.InstallLocalModPack;
 import com.movtery.pojavzh.feature.mod.modpack.install.ModPackUtils;
 import com.movtery.pojavzh.ui.dialog.TipDialog;
 import com.movtery.pojavzh.ui.fragment.SettingsFragment;
-import com.movtery.pojavzh.ui.subassembly.background.BackgroundType;
 import com.movtery.pojavzh.ui.subassembly.settingsbutton.ButtonType;
 import com.movtery.pojavzh.ui.subassembly.settingsbutton.SettingsButtonWrapper;
-import com.movtery.pojavzh.utils.PathAndUrlManager;
 import com.movtery.pojavzh.utils.ZHTools;
 import com.movtery.pojavzh.utils.anim.ViewAnimUtils;
 import com.movtery.pojavzh.utils.stringutils.ShiftDirection;
@@ -352,9 +352,6 @@ public class LauncherActivity extends BaseActivity {
         //检查已经下载后的包，或者检查更新
         PojavApplication.sExecutorService.execute(() -> UpdateLauncher.CheckDownloadedPackage(this, true));
 
-        requestSponsorship();
-
-
         LauncherActivity.activity = this;
     }
 
@@ -429,7 +426,10 @@ public class LauncherActivity extends BaseActivity {
     }
 
     private void refreshBackground() {
-        ZHTools.setBackgroundImage(this, BackgroundType.MAIN_MENU, findViewById(R.id.background_view));
+        BackgroundManager instance = BackgroundManager.getInstance();
+        if (instance != null) {
+            instance.setBackgroundImage(BackgroundType.MAIN_MENU, findViewById(R.id.background_view));
+        }
     }
 
     private void launchGame(MinecraftProfile prof) {
@@ -504,21 +504,6 @@ public class LauncherActivity extends BaseActivity {
             mRequestNotificationPermissionRunnable = new WeakReference<>(onSuccessRunnable);
         }
         mRequestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
-    }
-
-    private void requestSponsorship() {
-        if ((ZHTools.getCurrentTimeMillis() - LauncherPreferences.PREF_FIRST_LAUNCH_TIME > 5 * 60 * 60 * 1000) && !DEFAULT_PREF.getBoolean("noLongerRequestingSponsorship", false)) {
-            new TipDialog.Builder(this)
-                    .setTitle(R.string.zh_request_sponsorship_title)
-                    .setMessage(R.string.zh_request_sponsorship_message)
-                    .setConfirm(R.string.zh_about_button_support_development)
-                    .setConfirmClickListener(() -> Tools.openURL(this, PathAndUrlManager.URL_SUPPORT))
-                    .setDialogDismissListener(() -> {
-                        DEFAULT_PREF.edit().putBoolean("noLongerRequestingSponsorship", true).apply();
-                        return true;
-                    })
-                    .buildDialog();
-        }
     }
 
     private void setPageOpacity() {
