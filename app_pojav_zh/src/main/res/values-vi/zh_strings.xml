@@ -217,7 +217,6 @@
     <string name="zh_preference_category_experimental_patches">Bản vá thử nghiệm</string>
     <string name="zh_setting_java_memory_desc">Kiểm soát bộ nhớ được phân bổ cho Minecraft</string>
     <string name="zh_setting_java_memory_info">Thông tin sử dụng bộ nhớ hiện tại: %s / %s, kích thước bộ nhớ trống: %s</string>
-    <string name="zh_setting_java_memory_max">Kích thước bộ nhớ tối đa có thể đặt: %s</string>
     <string name="zh_setting_java_memory_exceeded">Kích thước bộ nhớ được đặt hiện vượt quá kích thước bộ nhớ có sẵn</string>
     <string name="zh_setting_mod_info_mirror">Nguồn thông tin Mod</string>
     <string name="zh_setting_mod_download_mirror">Nguồn tải xuống Mod</string>
@@ -289,10 +288,18 @@
     <string name="zh_other_login_error">Lỗi xảy ra khi đăng nhập: \n</string>
     <string name="zh_other_login_no_server">Không có máy chủ xác thực</string>
     <string name="zh_other_login_baseurl_not_set">Chưa đặt URL cơ sở</string>
-    <string name="zh_other_login_error_code">Mã lỗi:</string>
     <string name="zh_other_login_server_not_empty">Máy chủ không được để trống, vui lòng kiểm tra cài đặt máy chủ xác thực!</string>
     <string name="zh_other_login_select_role_title">Chọn vai trò</string>
     <string name="zh_other_login_select_role_message">Tài khoản hiện tại có nhiều vai trò. Vui lòng chọn vai trò bạn muốn sử dụng.</string>
+    <!-- Splash -->
+    <string name="splash_screen_desc">Trình khởi chạy cần cài đặt các thành phần này để đảm bảo Minecraft có thể chạy đúng cách. Nhấp vào nút bên dưới để bắt đầu cài đặt hoặc cập nhật các thành phần này.</string>
+    <string name="splash_screen_installing">Trình khởi chạy đang cài đặt các thành phần cần thiết. Sau khi hoàn tất cài đặt, nó sẽ tự động vào giao diện chính. Vui lòng kiên nhẫn chờ đợi.</string>
+    <string name="splash_screen_lwjgl">Thư viện Trò chơi Java nhẹ, Minecraft phụ thuộc vào nó để chạy trò chơi.</string>
+    <string name="splash_screen_cacio">Cung cấp giao diện đồ họa di động cho OpenJDK.</string>
+    <string name="splash_screen_jre8">Môi trường Java 8, Minecraft 1.16- phụ thuộc vào Java 8.</string>
+    <string name="splash_screen_jre17">Môi trường Java 17, Minecraft 1.17+ phụ thuộc vào Java 17.</string>
+    <string name="splash_screen_jre21">Môi trường Java 21, Minecraft 1.20.5+ phụ thuộc vào Java 21.</string>
+    <string name="splash_screen_apply">Đồng ý và Cài đặt</string>
     <!-- About -->
     <string name="zh_about_tab">Về Pojav Zenith Horizon</string>
     <string name="zh_about_dec1">Pojav Zenith Horizon là một trình khởi chạy Minecraft được chỉnh sửa dựa trên PojavLauncher, cho phép chạy Minecraft: Java Edition trên thiết bị Android. \nPojav Zenith Horizon tập trung vào tối ưu hóa trải nghiệm người dùng, thiết kế lại giao diện ứng dụng và thêm nhiều tính năng hữu ích, nhằm giảm thiểu ngưỡng cửa trải nghiệm Minecraft, giúp mọi người dễ dàng trải nghiệm niềm vui từ Minecraft.</string>
